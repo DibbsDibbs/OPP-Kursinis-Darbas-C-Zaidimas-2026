@@ -2,21 +2,27 @@
 
 #include "defines.h"
 
-struct Player
+class Player
 {
-	Player() : x(0.0f), y(0.0f) {}
+public:
+	Player();
+	Player(float startX, float startY);
 
-	void reset()
-	{
-		x = WINDOW_WIDTH / 2.0f;
-		y = MAX_PLAYER_Y;
-	}
+	void reset();
+	void move(float dx, float dy);
 
-	float LegsStartX() const { return x + 24; }
-	float LegsEndX()   const { return x + 64; }
-	float LegsY()      const { return y + 73; }
+	float getX() const { return m_x; }
+	float getY() const { return m_y; }
+	void  setX(float x) { m_x = x; }
+	void  setY(float y) { m_y = y; }
 
-	float x, y; // virsutinio kairiojo kampo koordinates
+	float LegsStartX() const { return m_x + 24; }
+	float LegsEndX()   const { return m_x + 64; }
+	float LegsY()      const { return m_y + 73; }
+
+private:
+	float m_x;
+	float m_y;
 };
 
 struct Plate
@@ -34,5 +40,5 @@ struct Plate
 	float TopY()    const { return y; }
 	float BottomY() const { return y + PLATES_HEIGHT; }
 
-	float x, y; // virsutinio kairiojo kampo koordinates
+	float x, y;
 };

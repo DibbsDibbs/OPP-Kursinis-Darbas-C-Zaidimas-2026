@@ -22,29 +22,27 @@ void UpdatePositions(Player& player, Plate plates[], float& dy, float& score, Ga
 	const float dx = 3.5f;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		player.x -= dx;
+		player.move(-dx, 0.0f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		player.x += dx;
+		player.move(dx, 0.0f);
 
-	if (player.x + PLAYER_WIDTH / 2 > WINDOW_WIDTH)
-		player.x = -PLAYER_WIDTH / 2;
-
-	if (player.x + PLAYER_WIDTH / 2 < 0)
-		player.x = WINDOW_WIDTH - PLAYER_WIDTH / 2;
+	if (player.getX() + PLAYER_WIDTH / 2 > WINDOW_WIDTH)
+		player.setX(-PLAYER_WIDTH / 2);
+	if (player.getX() + PLAYER_WIDTH / 2 < 0)
+		player.setX(WINDOW_WIDTH - PLAYER_WIDTH / 2);
 
 	dy += 0.2f;
+	player.move(0.0f, dy);
 
-	player.y += dy;
-
-	if (player.y > WINDOW_HEIGHT)
+	if (player.getY() > WINDOW_HEIGHT)
 	{
 		state = GameState::GameOver;
 		return;
 	}
 
-	if (player.y < MAX_PLAYER_Y)
+	if (player.getY() < MAX_PLAYER_Y)
 	{
-		player.y = MAX_PLAYER_Y;
+		player.setY(MAX_PLAYER_Y);
 		score -= 0.05f * dy;
 
 		for (int i = 0; i < PLATES_AMOUNT; ++i)
@@ -168,7 +166,7 @@ int main()
 			app.draw(sprPlatform);
 		}
 
-		sprPlayer.setPosition(player.x, player.y);
+		sprPlayer.setPosition(player.getX(), player.getY());
 		app.draw(sprPlayer);
 
 		scoreText.setString(to_string((int)score));

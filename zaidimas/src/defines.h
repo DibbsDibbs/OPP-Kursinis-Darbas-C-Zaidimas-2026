@@ -11,4 +11,10 @@ const int PLATES_AMOUNT = 10;	// bus 10 ploksciu
 const int PLATES_WIDTH = 68;	// plokstes plotis
 const int PLATES_HEIGHT = 14;	// plokstes aukstis
 
+enum class GameState
+{
+	Playing,
+	GameOver
+};
+
 //#define SOUND_ON

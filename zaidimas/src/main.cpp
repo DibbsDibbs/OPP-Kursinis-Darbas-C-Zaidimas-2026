@@ -7,7 +7,21 @@
 using namespace sf;
 using namespace std;
 
-void UpdatePositions(Player &player, Plate plates[], float &dy, float &score)
+void ResetGame(Player& player, Plate plates[], float& dy, float& score)
+{
+	player.x = WINDOW_WIDTH / 2.0f;
+	player.y = MAX_PLAYER_Y;
+	dy = 0.0f;
+	score = 0.0f;
+
+	for (int i = 0; i < PLATES_AMOUNT; ++i)
+	{
+		plates[i].x = float(rand() % (WINDOW_WIDTH - PLATES_WIDTH));
+		plates[i].y = (float)WINDOW_HEIGHT / PLATES_AMOUNT * i;
+	}
+}
+
+void UpdatePositions(Player& player, Plate plates[], float& dy, float& score, GameState& state)
 {
 	const float dx = 3.5f;
 
@@ -22,12 +36,15 @@ void UpdatePositions(Player &player, Plate plates[], float &dy, float &score)
 	if (player.x + PLAYER_WIDTH / 2 < 0)
 		player.x = WINDOW_WIDTH - PLAYER_WIDTH / 2;
 
-	dy += 0.2f; // gravitacija su pagreiciu
+	dy += 0.2f;
 
 	player.y += dy;
 
 	if (player.y > WINDOW_HEIGHT)
-		dy = PLAYER_JUMP_V;
+	{
+		state = GameState::GameOver;
+		return;
+	}
 
 	if (player.y < MAX_PLAYER_Y)
 	{
@@ -68,14 +85,31 @@ int main()
 	sf::Font font;
 	font.loadFromFile("resources/arialbd.ttf");
 
-	sf::Text text;
-	text.setFont(font);
-	text.setString("0");
-	text.setCharacterSize(40);
-	text.setFillColor(Color::Red);
-	text.setOutlineThickness(1);
-	text.setOutlineColor(Color::Black);
-	text.setPosition(WINDOW_WIDTH / 2.0f - 25.f, 10.f);
+	sf::Text scoreText;
+	scoreText.setFont(font);
+	scoreText.setCharacterSize(40);
+	scoreText.setFillColor(Color::Red);
+	scoreText.setOutlineThickness(1);
+	scoreText.setOutlineColor(Color::Black);
+	scoreText.setPosition(WINDOW_WIDTH / 2.0f - 25.f, 10.f);
+
+	sf::Text gameOverText;
+	gameOverText.setFont(font);
+	gameOverText.setString("Game Over");
+	gameOverText.setCharacterSize(52);
+	gameOverText.setFillColor(Color::White);
+	gameOverText.setOutlineThickness(2);
+	gameOverText.setOutlineColor(Color::Black);
+	gameOverText.setPosition(70.f, 180.f);
+
+	sf::Text restartText;
+	restartText.setFont(font);
+	restartText.setString("Press R to restart");
+	restartText.setCharacterSize(26);
+	restartText.setFillColor(Color::Yellow);
+	restartText.setOutlineThickness(1);
+	restartText.setOutlineColor(Color::Black);
+	restartText.setPosition(85.f, 250.f);
 
 	Sprite sprBackground(tBackground);
 	Sprite sprPlayer(tPlayer1);
@@ -89,22 +123,16 @@ int main()
 	sound.setBuffer(buffer);
 	sound.play();
 	sound.setLoop(true);
-#endif // SOUND_ON
+#endif
 
 	Player player;
-	player.x = WINDOW_WIDTH / 2;
-	player.y = MAX_PLAYER_Y;
-
 	Plate plates[PLATES_AMOUNT];
-
-	for (int i = 0; i < PLATES_AMOUNT; ++i)
-	{
-		plates[i].x = float(rand() % (WINDOW_WIDTH - PLATES_WIDTH));
-		plates[i].y = (float)WINDOW_HEIGHT / PLATES_AMOUNT * i;
-	}
 
 	float dy = 0;
 	float score = 0;
+	GameState state = GameState::Playing;
+
+	ResetGame(player, plates, dy, score);
 
 	while (app.isOpen())
 	{
@@ -115,15 +143,26 @@ int main()
 				app.close();
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
-			sprPlayer.setTexture(tPlayer1);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+		if (state == GameState::GameOver)
 		{
-			sprPlayer.setTexture(tPlayer2);
-			dy -= 0.21f;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+			{
+				ResetGame(player, plates, dy, score);
+				state = GameState::Playing;
+			}
 		}
+		else
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+				sprPlayer.setTexture(tPlayer1);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+			{
+				sprPlayer.setTexture(tPlayer2);
+				dy -= 0.21f;
+			}
 
-		UpdatePositions(player, plates, dy, score);
+			UpdatePositions(player, plates, dy, score, state);
+		}
 
 		app.draw(sprBackground);
 
@@ -136,8 +175,14 @@ int main()
 		sprPlayer.setPosition(player.x, player.y);
 		app.draw(sprPlayer);
 
-		text.setString(to_string((int)score));
-		app.draw(text);
+		scoreText.setString(to_string((int)score));
+		app.draw(scoreText);
+
+		if (state == GameState::GameOver)
+		{
+			app.draw(gameOverText);
+			app.draw(restartText);
+		}
 
 		app.display();
 	}

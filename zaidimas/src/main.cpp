@@ -9,16 +9,12 @@ using namespace std;
 
 void ResetGame(Player& player, Plate plates[], float& dy, float& score)
 {
-	player.x = WINDOW_WIDTH / 2.0f;
-	player.y = MAX_PLAYER_Y;
+	player.reset();
 	dy = 0.0f;
 	score = 0.0f;
 
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
-	{
-		plates[i].x = float(rand() % (WINDOW_WIDTH - PLATES_WIDTH));
-		plates[i].y = (float)WINDOW_HEIGHT / PLATES_AMOUNT * i;
-	}
+		plates[i].reset(i);
 }
 
 void UpdatePositions(Player& player, Plate plates[], float& dy, float& score, GameState& state)

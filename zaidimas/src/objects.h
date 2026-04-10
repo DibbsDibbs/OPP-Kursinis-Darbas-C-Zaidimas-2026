@@ -25,20 +25,25 @@ private:
 	float m_y;
 };
 
-struct Plate
+class Plate
 {
-	Plate() : x(0.0f), y(0.0f) {}
+public:
+	Plate();
+	Plate(float startX, float startY);
 
-	void reset(int index)
-	{
-		x = float(rand() % (WINDOW_WIDTH - PLATES_WIDTH));
-		y = float(WINDOW_HEIGHT) / PLATES_AMOUNT * index;
-	}
+	void reset(int index);
+	void scrollBy(float dy);
 
-	float StartX()  const { return x; }
-	float EndX()    const { return x + PLATES_WIDTH; }
-	float TopY()    const { return y; }
-	float BottomY() const { return y + PLATES_HEIGHT; }
+	float getX() const { return m_x; }
+	float getY() const { return m_y; }
+	void  setPosition(float x, float y) { m_x = x; m_y = y; }
 
-	float x, y;
+	float StartX()  const { return m_x; }
+	float EndX()    const { return m_x + PLATES_WIDTH; }
+	float TopY()    const { return m_y; }
+	float BottomY() const { return m_y + PLATES_HEIGHT; }
+
+private:
+	float m_x;
+	float m_y;
 };

@@ -46,15 +46,7 @@ void UpdatePositions(Player& player, Plate plates[], float& dy, float& score, Ga
 		score -= 0.05f * dy;
 
 		for (int i = 0; i < PLATES_AMOUNT; ++i)
-		{
-			plates[i].y -= dy;
-
-			if (plates[i].y > WINDOW_HEIGHT)
-			{
-				plates[i].y = float(rand() % 10);
-				plates[i].x = float(rand() % (WINDOW_WIDTH - PLATES_WIDTH));
-			}
-		}
+			plates[i].scrollBy(dy);
 	}
 
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
@@ -162,7 +154,7 @@ int main()
 
 		for (int i = 0; i < PLATES_AMOUNT; ++i)
 		{
-			sprPlatform.setPosition(plates[i].x, plates[i].y);
+			sprPlatform.setPosition(plates[i].getX(), plates[i].getY());
 			app.draw(sprPlatform);
 		}
 

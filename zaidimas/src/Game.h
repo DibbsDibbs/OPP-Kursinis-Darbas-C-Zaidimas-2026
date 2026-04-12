@@ -5,11 +5,13 @@
 
 #include "defines.h"
 #include "objects.h"
+#include "Platform.h"
 
 class Game
 {
 public:
 	Game();
+	~Game();
 
 	void run();
 
@@ -35,8 +37,8 @@ private:
 	sf::Text m_gameOverText;
 	sf::Text m_restartText;
 
-	Player m_player;
-	Plate  m_plates[PLATES_AMOUNT];
+	Player   m_player;
+	Platform* m_platforms[PLATES_AMOUNT];
 
 	float     m_dy;
 	float     m_score;

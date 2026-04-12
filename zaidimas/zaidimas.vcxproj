@@ -93,6 +93,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Platform.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects.cpp" />
     <ClCompile Include="src\utils.cpp" />
@@ -105,7 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\defines.h" />
+    <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Platform.h" />
     <ClInclude Include="src\objects.h" />
     <ClInclude Include="src\utils.h" />
   </ItemGroup>

@@ -9,7 +9,6 @@ Game::Game()
 	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Doodle Jump"),
 	m_sprBackground(m_tBackground),
 	m_sprPlayer(m_tPlayer1),
-	m_sprPlatform(m_tPlatform),
 	m_dy(0.0f),
 	m_score(0.0f),
 	m_state(GameState::Playing)
@@ -25,7 +24,6 @@ Game::Game()
 
 	m_sprBackground.setTexture(m_tBackground);
 	m_sprPlayer.setTexture(m_tPlayer1);
-	m_sprPlatform.setTexture(m_tPlatform);
 
 	m_scoreText.setFont(m_font);
 	m_scoreText.setCharacterSize(40);
@@ -50,7 +48,16 @@ Game::Game()
 	m_restartText.setOutlineColor(sf::Color::Black);
 	m_restartText.setPosition(85.f, 250.f);
 
+	for (int i = 0; i < PLATES_AMOUNT; ++i)
+		m_platforms[i] = new Platform(m_tPlatform, 0.0f, 0.0f);
+
 	reset();
+}
+
+Game::~Game()
+{
+	for (int i = 0; i < PLATES_AMOUNT; ++i)
+		delete m_platforms[i];
 }
 
 void Game::run()
@@ -123,12 +130,14 @@ void Game::update()
 		m_score -= 0.05f * m_dy;
 
 		for (int i = 0; i < PLATES_AMOUNT; ++i)
-			m_plates[i].scrollBy(m_dy);
+			m_platforms[i]->scrollBy(m_dy);
 	}
 
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
 	{
-		if (utils::InOnPlate(m_player, m_plates[i]) && m_dy > 0)
+		m_platforms[i]->update();
+
+		if (utils::IsOnPlatform(m_player, *m_platforms[i]) && m_dy > 0)
 			m_dy = PLAYER_JUMP_V;
 	}
 }
@@ -138,10 +147,7 @@ void Game::draw()
 	m_window.draw(m_sprBackground);
 
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
-	{
-		m_sprPlatform.setPosition(m_plates[i].getX(), m_plates[i].getY());
-		m_window.draw(m_sprPlatform);
-	}
+		m_platforms[i]->draw(m_window);
 
 	m_sprPlayer.setPosition(m_player.getX(), m_player.getY());
 	m_window.draw(m_sprPlayer);
@@ -165,5 +171,5 @@ void Game::reset()
 	m_score = 0.0f;
 
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
-		m_plates[i].reset(i);
+		m_platforms[i]->reset(i);
 }

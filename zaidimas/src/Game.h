@@ -2,6 +2,7 @@
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 #include "defines.h"
 #include "objects.h"
@@ -38,9 +39,9 @@ private:
 	sf::Text m_gameOverText;
 	sf::Text m_restartText;
 
-	Player    m_player;
-	Platform* m_platforms[PLATES_AMOUNT];
-	Enemy*    m_enemy;
+	Player                   m_player;
+	std::vector<Platform*>   m_platforms;
+	Enemy*                   m_enemy;
 
 	float     m_dy;
 	float     m_score;

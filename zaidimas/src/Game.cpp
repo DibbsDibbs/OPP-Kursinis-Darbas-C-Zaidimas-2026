@@ -48,8 +48,9 @@ Game::Game()
 	m_restartText.setOutlineColor(sf::Color::Black);
 	m_restartText.setPosition(85.f, 250.f);
 
+	m_platforms.reserve(PLATES_AMOUNT);
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
-		m_platforms[i] = new Platform(m_tPlatform, 0.0f, 0.0f);
+		m_platforms.push_back(new Platform(m_tPlatform, 0.0f, 0.0f));
 
 	m_enemy = new Enemy(180.0f, 150.0f, 1.5f);
 
@@ -58,8 +59,8 @@ Game::Game()
 
 Game::~Game()
 {
-	for (int i = 0; i < PLATES_AMOUNT; ++i)
-		delete m_platforms[i];
+	for (Platform* p : m_platforms)
+		delete p;
 
 	delete m_enemy;
 }
@@ -133,17 +134,17 @@ void Game::update()
 		m_player.setY(MAX_PLAYER_Y);
 		m_score -= 0.05f * m_dy;
 
-		for (int i = 0; i < PLATES_AMOUNT; ++i)
-			m_platforms[i]->scrollBy(m_dy);
+		for (Platform* p : m_platforms)
+			p->scrollBy(m_dy);
 
 		m_enemy->scrollBy(m_dy);
 	}
 
-	for (int i = 0; i < PLATES_AMOUNT; ++i)
+	for (Platform* p : m_platforms)
 	{
-		m_platforms[i]->update();
+		p->update();
 
-		if (utils::IsOnPlatform(m_player, *m_platforms[i]) && m_dy > 0)
+		if (utils::IsOnPlatform(m_player, *p) && m_dy > 0)
 			m_dy = PLAYER_JUMP_V;
 	}
 
@@ -161,8 +162,8 @@ void Game::draw()
 {
 	m_window.draw(m_sprBackground);
 
-	for (int i = 0; i < PLATES_AMOUNT; ++i)
-		m_platforms[i]->draw(m_window);
+	for (Platform* p : m_platforms)
+		p->draw(m_window);
 
 	m_enemy->draw(m_window);
 
@@ -187,7 +188,7 @@ void Game::reset()
 	m_dy = 0.0f;
 	m_score = 0.0f;
 
-	for (int i = 0; i < PLATES_AMOUNT; ++i)
+	for (int i = 0; i < static_cast<int>(m_platforms.size()); ++i)
 		m_platforms[i]->reset(i);
 
 	*m_enemy = Enemy(180.0f, 150.0f, 1.5f);

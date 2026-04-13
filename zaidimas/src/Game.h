@@ -5,6 +5,7 @@
 
 #include "defines.h"
 #include "objects.h"
+#include "Enemy.h"
 #include "Platform.h"
 
 class Game
@@ -37,8 +38,9 @@ private:
 	sf::Text m_gameOverText;
 	sf::Text m_restartText;
 
-	Player   m_player;
+	Player    m_player;
 	Platform* m_platforms[PLATES_AMOUNT];
+	Enemy*    m_enemy;
 
 	float     m_dy;
 	float     m_score;

@@ -51,6 +51,8 @@ Game::Game()
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
 		m_platforms[i] = new Platform(m_tPlatform, 0.0f, 0.0f);
 
+	m_enemy = new Enemy(180.0f, 150.0f, 1.5f);
+
 	reset();
 }
 
@@ -58,6 +60,8 @@ Game::~Game()
 {
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
 		delete m_platforms[i];
+
+	delete m_enemy;
 }
 
 void Game::run()
@@ -131,6 +135,8 @@ void Game::update()
 
 		for (int i = 0; i < PLATES_AMOUNT; ++i)
 			m_platforms[i]->scrollBy(m_dy);
+
+		m_enemy->scrollBy(m_dy);
 	}
 
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
@@ -140,6 +146,15 @@ void Game::update()
 		if (utils::IsOnPlatform(m_player, *m_platforms[i]) && m_dy > 0)
 			m_dy = PLAYER_JUMP_V;
 	}
+
+	m_enemy->chasePlayer(m_player.getX());
+	m_enemy->update();
+
+	if (m_enemy->getBounds().intersects(
+		sf::FloatRect(m_player.getX(), m_player.getY(), PLAYER_WIDTH, PLAYER_WIDTH)))
+	{
+		m_state = GameState::GameOver;
+	}
 }
 
 void Game::draw()
@@ -148,6 +163,8 @@ void Game::draw()
 
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
 		m_platforms[i]->draw(m_window);
+
+	m_enemy->draw(m_window);
 
 	m_sprPlayer.setPosition(m_player.getX(), m_player.getY());
 	m_window.draw(m_sprPlayer);
@@ -172,4 +189,6 @@ void Game::reset()
 
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
 		m_platforms[i]->reset(i);
+
+	*m_enemy = Enemy(180.0f, 150.0f, 1.5f);
 }

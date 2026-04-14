@@ -20,6 +20,19 @@ Enemy::Enemy(float x, float y, float speed)
 	m_shape.setPosition(m_x, m_y);
 }
 
+Enemy::Enemy(const Enemy& other)
+	: m_speed(other.m_speed), m_direction(other.m_direction)
+{
+	m_x = other.m_x;
+	m_y = other.m_y;
+
+	m_shape.setRadius(ENEMY_RADIUS);
+	m_shape.setFillColor(other.m_shape.getFillColor());
+	m_shape.setOutlineColor(sf::Color::Black);
+	m_shape.setOutlineThickness(1.5f);
+	m_shape.setPosition(m_x, m_y);
+}
+
 void Enemy::update()
 {
 	m_x += m_speed * m_direction;

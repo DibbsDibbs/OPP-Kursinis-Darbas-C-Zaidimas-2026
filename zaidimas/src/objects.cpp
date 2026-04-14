@@ -37,6 +37,11 @@ Player::Player(float startX, float startY)
 {
 }
 
+Player::Player(const Player& other)
+	: m_x(other.m_x), m_y(other.m_y)
+{
+}
+
 void Player::reset()
 {
 	m_x = WINDOW_WIDTH / 2.0f;

@@ -7,6 +7,7 @@ class Player
 public:
 	Player();
 	Player(float startX, float startY);
+	Player(const Player& other);
 
 	void reset();
 	void move(float dx, float dy);

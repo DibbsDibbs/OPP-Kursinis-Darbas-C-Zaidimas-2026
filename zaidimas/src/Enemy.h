@@ -6,6 +6,7 @@ class Enemy : public Entity
 {
 public:
 	Enemy(float x, float y, float speed);
+	Enemy(const Enemy& other);
 
 	void update() override;
 	void draw(sf::RenderWindow& window) override;

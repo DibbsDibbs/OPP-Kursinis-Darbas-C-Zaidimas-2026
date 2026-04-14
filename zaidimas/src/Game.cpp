@@ -191,5 +191,6 @@ void Game::reset()
 	for (int i = 0; i < static_cast<int>(m_platforms.size()); ++i)
 		m_platforms[i]->reset(i);
 
-	*m_enemy = Enemy(180.0f, 150.0f, 1.5f);
+	Enemy fresh(180.0f, 150.0f, 1.5f);
+	*m_enemy = Enemy(fresh);
 }

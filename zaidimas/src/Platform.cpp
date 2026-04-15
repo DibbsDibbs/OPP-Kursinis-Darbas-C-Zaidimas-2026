@@ -47,6 +47,10 @@ void Platform::reset(int index)
 	m_sprite.setPosition(m_x, m_y);
 }
 
+float Platform::getJumpVelocity() const { return PLAYER_JUMP_V; }
+void  Platform::onLand() {}
+bool  Platform::isActive() const { return true; }
+
 float Platform::StartX()  const { return m_x; }
 float Platform::EndX()    const { return m_x + PLATES_WIDTH; }
 float Platform::TopY()    const { return m_y; }

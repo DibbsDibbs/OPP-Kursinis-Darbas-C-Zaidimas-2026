@@ -50,7 +50,17 @@ Game::Game()
 
 	m_platforms.reserve(PLATES_AMOUNT);
 	for (int i = 0; i < PLATES_AMOUNT; ++i)
-		m_platforms.push_back(new Platform(m_tPlatform, 0.0f, 0.0f));
+	{
+		const int type = i % 5;
+		if (type == 1)
+			m_platforms.push_back(new BreakingPlatform(m_tPlatform, 0.0f, 0.0f));
+		else if (type == 2)
+			m_platforms.push_back(new MovingPlatform(m_tPlatform, 0.0f, 0.0f, 1.8f));
+		else if (type == 3)
+			m_platforms.push_back(new SpringPlatform(m_tPlatform, 0.0f, 0.0f));
+		else
+			m_platforms.push_back(new Platform(m_tPlatform, 0.0f, 0.0f));
+	}
 
 	m_enemy = new Enemy(180.0f, 150.0f, 1.5f);
 
@@ -144,8 +154,11 @@ void Game::update()
 	{
 		p->update();
 
-		if (utils::IsOnPlatform(m_player, *p) && m_dy > 0)
-			m_dy = PLAYER_JUMP_V;
+		if (p->isActive() && utils::IsOnPlatform(m_player, *p) && m_dy > 0)
+		{
+			m_dy = p->getJumpVelocity();
+			p->onLand();
+		}
 	}
 
 	m_enemy->chasePlayer(m_player.getX());

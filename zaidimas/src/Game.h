@@ -8,6 +8,9 @@
 #include "objects.h"
 #include "Enemy.h"
 #include "Platform.h"
+#include "BreakingPlatform.h"
+#include "MovingPlatform.h"
+#include "SpringPlatform.h"
 
 class Game
 {

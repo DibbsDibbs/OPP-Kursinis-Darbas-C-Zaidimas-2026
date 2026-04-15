@@ -92,9 +92,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\BreakingPlatform.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\MovingPlatform.cpp" />
     <ClCompile Include="src\Platform.cpp" />
+    <ClCompile Include="src\SpringPlatform.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects.cpp" />
     <ClCompile Include="src\utils.cpp" />
@@ -106,9 +109,12 @@
     <Image Include="resources\platform.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BreakingPlatform.h" />
     <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\Enemy.h" />
     <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\MovingPlatform.h" />
+    <ClInclude Include="src\SpringPlatform.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Platform.h" />
     <ClInclude Include="src\objects.h" />

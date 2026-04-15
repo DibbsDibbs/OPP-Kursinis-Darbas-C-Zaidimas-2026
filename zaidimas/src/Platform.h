@@ -11,14 +11,18 @@ public:
 	void draw(sf::RenderWindow& window) override;
 	sf::FloatRect getBounds() const override;
 
-	void scrollBy(float dy);
-	void reset(int index);
+	virtual void scrollBy(float dy);
+	virtual void reset(int index);
+
+	virtual float getJumpVelocity() const;
+	virtual void  onLand();
+	virtual bool  isActive() const;
 
 	float StartX()  const;
 	float EndX()    const;
 	float TopY()    const;
 	float BottomY() const;
 
-private:
+protected:
 	sf::Sprite m_sprite;
 };

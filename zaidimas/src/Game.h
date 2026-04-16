@@ -44,7 +44,6 @@ private:
 
 	Player                   m_player;
 	std::vector<Platform*>   m_platforms;
-	Enemy*                   m_enemy;
 
 	float     m_dy;
 	float     m_score;

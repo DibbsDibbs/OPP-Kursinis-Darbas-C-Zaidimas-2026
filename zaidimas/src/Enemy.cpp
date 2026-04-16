@@ -3,6 +3,7 @@
 #include "defines.h"
 
 #include <cmath>
+#include <cstdlib>
 
 static const float ENEMY_RADIUS    = 18.0f;
 static const float VISION_DISTANCE = 130.0f;
@@ -56,6 +57,13 @@ sf::FloatRect Enemy::getBounds() const
 void Enemy::scrollBy(float dy)
 {
 	m_y -= dy;
+
+	if (m_y > WINDOW_HEIGHT)
+	{
+		m_y = -float(std::rand() % 80 + 20);
+		m_x = float(std::rand() % (WINDOW_WIDTH - int(ENEMY_RADIUS * 2)));
+	}
+
 	m_shape.setPosition(m_x, m_y);
 }
 

@@ -36,6 +36,7 @@ void BreakingPlatform::scrollBy(float dy)
 {
 	Platform::scrollBy(dy);
 
-	if (m_y <= float(std::rand() % 10))
+	// Reset broken state when platform wraps back from above screen
+	if (m_y < 0.0f)
 		m_broken = false;
 }

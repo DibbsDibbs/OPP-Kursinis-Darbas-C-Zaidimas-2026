@@ -43,7 +43,7 @@ void Platform::scrollBy(float dy)
 
 	if (m_y > WINDOW_HEIGHT)
 	{
-		m_y = float(std::rand() % 10);
+		m_y = -float(std::rand() % WINDOW_HEIGHT);
 		m_x = float(std::rand() % (WINDOW_WIDTH - PLATES_WIDTH));
 	}
 

@@ -173,6 +173,7 @@ void Game::update()
 
 void Game::draw()
 {
+	m_window.clear();
 	m_window.draw(m_sprBackground);
 
 	for (Platform* p : m_platforms)

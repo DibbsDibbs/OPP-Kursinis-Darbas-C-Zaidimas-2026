@@ -62,7 +62,7 @@ Game::Game()
 			m_platforms.push_back(new Platform(m_tPlatform, 0.0f, 0.0f));
 	}
 
-	m_enemy = new Enemy(180.0f, 150.0f, 1.5f);
+	m_enemy = new Enemy(20.0f, 400.0f, 1.5f);
 
 	reset();
 }
@@ -204,6 +204,12 @@ void Game::reset()
 	for (int i = 0; i < static_cast<int>(m_platforms.size()); ++i)
 		m_platforms[i]->reset(i);
 
-	Enemy fresh(180.0f, 150.0f, 1.5f);
+	// Garantuojame platformą tiesiai po žaidėjo pradinės pozicijos
+	m_platforms[0]->setPosition(
+		WINDOW_WIDTH / 2.0f - PLATES_WIDTH / 2.0f,
+		MAX_PLAYER_Y + PLAYER_WIDTH + 10.0f
+	);
+
+	Enemy fresh(20.0f, 400.0f, 1.5f);
 	*m_enemy = Enemy(fresh);
 }

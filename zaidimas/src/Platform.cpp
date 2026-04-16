@@ -9,6 +9,7 @@ Platform::Platform(const sf::Texture& texture, float x, float y)
 	m_x = x;
 	m_y = y;
 	m_sprite.setTexture(texture);
+	m_sprite.setTextureRect(sf::IntRect(0, 0, PLATES_WIDTH, PLATES_HEIGHT));
 	m_sprite.setPosition(m_x, m_y);
 }
 
@@ -44,6 +45,13 @@ void Platform::reset(int index)
 {
 	m_x = float(std::rand() % (WINDOW_WIDTH - PLATES_WIDTH));
 	m_y = float(WINDOW_HEIGHT) / PLATES_AMOUNT * index;
+	m_sprite.setPosition(m_x, m_y);
+}
+
+void Platform::setPosition(float x, float y)
+{
+	m_x = x;
+	m_y = y;
 	m_sprite.setPosition(m_x, m_y);
 }
 

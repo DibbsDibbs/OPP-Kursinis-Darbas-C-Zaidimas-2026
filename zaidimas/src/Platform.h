@@ -13,6 +13,7 @@ public:
 
 	virtual void scrollBy(float dy);
 	virtual void reset(int index);
+	void setPosition(float x, float y);
 
 	virtual float getJumpVelocity() const;
 	virtual void  onLand();

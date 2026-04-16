@@ -43,7 +43,9 @@ void Platform::scrollBy(float dy)
 
 	if (m_y > WINDOW_HEIGHT)
 	{
-		m_y = -float(std::rand() % WINDOW_HEIGHT);
+		// Spread respawn just above the top edge so platforms flow steadily
+		const int spacing = WINDOW_HEIGHT / PLATES_AMOUNT;
+		m_y = -float(std::rand() % spacing);
 		m_x = float(std::rand() % (WINDOW_WIDTH - PLATES_WIDTH));
 	}
 

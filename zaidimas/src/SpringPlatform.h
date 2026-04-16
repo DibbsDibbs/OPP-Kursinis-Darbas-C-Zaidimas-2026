@@ -11,6 +11,4 @@ public:
 	void  draw(sf::RenderWindow& window) override;
 	float getJumpVelocity() const override;
 
-private:
-	sf::CircleShape m_spring;
 };

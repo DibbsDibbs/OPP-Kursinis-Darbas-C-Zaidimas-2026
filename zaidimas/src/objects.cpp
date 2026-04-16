@@ -1,5 +1,7 @@
 #include "objects.h"
 
+#include <cstdlib>
+
 Plate::Plate()
 	: m_x(0.0f), m_y(0.0f)
 {

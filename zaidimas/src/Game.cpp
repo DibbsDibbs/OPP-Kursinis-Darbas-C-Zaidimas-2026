@@ -22,8 +22,22 @@ Game::Game()
 	m_tPlatform.loadFromFile("resources/platform.png");
 	m_font.loadFromFile("resources/arialbd.ttf");
 
-	m_sprBackground.setTexture(m_tBackground);
-	m_sprPlayer.setTexture(m_tPlayer1);
+	// true = reset texture rect to full texture size
+	m_sprBackground.setTexture(m_tBackground, true);
+	const sf::Vector2u bgSize = m_tBackground.getSize();
+	if (bgSize.x > 0 && bgSize.y > 0)
+		m_sprBackground.setScale(
+			float(WINDOW_WIDTH)  / float(bgSize.x),
+			float(WINDOW_HEIGHT) / float(bgSize.y)
+		);
+
+	m_sprPlayer.setTexture(m_tPlayer1, true);
+	const sf::Vector2u playerSize = m_tPlayer1.getSize();
+	if (playerSize.x > 0 && playerSize.y > 0)
+	{
+		const float scale = float(PLAYER_WIDTH) / float(playerSize.x);
+		m_sprPlayer.setScale(scale, scale);
+	}
 
 	m_scoreText.setFont(m_font);
 	m_scoreText.setCharacterSize(40);
@@ -105,10 +119,10 @@ void Game::processEvents()
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
-		m_sprPlayer.setTexture(m_tPlayer1);
+		m_sprPlayer.setTexture(m_tPlayer1, true);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
 	{
-		m_sprPlayer.setTexture(m_tPlayer2);
+		m_sprPlayer.setTexture(m_tPlayer2, true);
 		m_dy -= 0.21f;
 	}
 }

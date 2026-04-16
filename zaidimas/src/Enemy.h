@@ -13,7 +13,6 @@ public:
 	sf::FloatRect getBounds() const override;
 
 	void scrollBy(float dy);
-	void chasePlayer(float playerX);
 
 private:
 	sf::CircleShape m_shape;

@@ -76,6 +76,12 @@ Game::Game()
 			m_platforms.push_back(new Platform(m_tPlatform, 0.0f, 0.0f));
 	}
 
+	m_enemy = new Enemy(
+		float(std::rand() % (WINDOW_WIDTH - 20)),
+		float(std::rand() % WINDOW_HEIGHT),
+		2.0f
+	);
+
 	reset();
 }
 
@@ -83,6 +89,8 @@ Game::~Game()
 {
 	for (Platform* p : m_platforms)
 		delete p;
+
+	delete m_enemy;
 }
 
 void Game::run()
@@ -156,6 +164,8 @@ void Game::update()
 
 		for (Platform* p : m_platforms)
 			p->scrollBy(m_dy);
+
+		m_enemy->scrollBy(m_dy);
 	}
 
 	for (Platform* p : m_platforms)
@@ -169,6 +179,14 @@ void Game::update()
 		}
 	}
 
+	m_enemy->update();
+
+	if (m_enemy->getBounds().intersects(
+		sf::FloatRect(m_player.getX() + 10, m_player.getY() + 10,
+			PLAYER_WIDTH - 20, PLAYER_WIDTH - 20)))
+	{
+		m_state = GameState::GameOver;
+	}
 }
 
 void Game::draw()
@@ -178,6 +196,8 @@ void Game::draw()
 
 	for (Platform* p : m_platforms)
 		p->draw(m_window);
+
+	m_enemy->draw(m_window);
 
 	m_sprPlayer.setPosition(m_player.getX(), m_player.getY());
 	m_window.draw(m_sprPlayer);
@@ -209,4 +229,9 @@ void Game::reset()
 		MAX_PLAYER_Y + PLAYER_WIDTH + 10.0f
 	);
 
+	*m_enemy = Enemy(
+		float(std::rand() % (WINDOW_WIDTH - 20)),
+		-float(std::rand() % 100 + 50),
+		2.0f
+	);
 }

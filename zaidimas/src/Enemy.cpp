@@ -58,8 +58,8 @@ void Enemy::scrollBy(float dy)
 
 	if (m_y > WINDOW_HEIGHT)
 	{
-		// Reappear at a random position above the screen
-		m_y = -float(std::rand() % (WINDOW_HEIGHT / 2) + 40);
+		// Reappear far above the screen so enemy appears less frequently
+		m_y = -float(std::rand() % WINDOW_HEIGHT + WINDOW_HEIGHT * 2);
 		m_x = float(std::rand() % (WINDOW_WIDTH - int(ENEMY_RADIUS * 2)));
 		m_direction = (std::rand() % 2 == 0) ? 1.0f : -1.0f;
 	}

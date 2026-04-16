@@ -9,7 +9,16 @@ Platform::Platform(const sf::Texture& texture, float x, float y)
 	m_x = x;
 	m_y = y;
 	m_sprite.setTexture(texture);
-	m_sprite.setTextureRect(sf::IntRect(0, 0, PLATES_WIDTH, PLATES_HEIGHT));
+
+	const sf::Vector2u texSize = texture.getSize();
+	if (texSize.x > 0 && texSize.y > 0)
+	{
+		m_sprite.setScale(
+			float(PLATES_WIDTH)  / float(texSize.x),
+			float(PLATES_HEIGHT) / float(texSize.y)
+		);
+	}
+
 	m_sprite.setPosition(m_x, m_y);
 }
 

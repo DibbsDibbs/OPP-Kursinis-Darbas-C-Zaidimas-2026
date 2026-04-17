@@ -8,7 +8,8 @@ class MovingPlatform : public Platform
 public:
 	MovingPlatform(const sf::Texture& texture, float x, float y, float speed);
 
-	void update() override;
+	void  update() override;
+	float getHorizontalPush() const;
 
 private:
 	float m_moveSpeed;

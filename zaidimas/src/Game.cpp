@@ -176,6 +176,16 @@ void Game::update()
 		{
 			m_dy = p->getJumpVelocity();
 			p->onLand();
+
+			// dynamic_cast: check exact platform type for special effects
+			if (MovingPlatform* mp = dynamic_cast<MovingPlatform*>(p))
+			{
+				m_player.move(mp->getHorizontalPush() * 3.0f, 0.0f);
+			}
+			else if (dynamic_cast<BreakingPlatform*>(p))
+			{
+				m_score += 10.0f;
+			}
 		}
 	}
 

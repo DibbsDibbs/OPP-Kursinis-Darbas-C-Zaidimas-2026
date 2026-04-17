@@ -8,6 +8,11 @@ MovingPlatform::MovingPlatform(const sf::Texture& texture, float x, float y, flo
 	m_sprite.setColor(sf::Color(120, 180, 255));
 }
 
+float MovingPlatform::getHorizontalPush() const
+{
+	return m_moveSpeed * m_moveDir;
+}
+
 void MovingPlatform::update()
 {
 	m_x += m_moveSpeed * m_moveDir;

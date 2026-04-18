@@ -149,6 +149,7 @@ void Game::update()
 		m_player.setX(WINDOW_WIDTH - PLAYER_WIDTH / 2);
 
 	m_dy += 0.2f;
+	m_dy = utils::clamp(m_dy, -15.0f, 12.0f);
 	m_player.move(0.0f, m_dy);
 
 	if (m_player.getY() > WINDOW_HEIGHT)

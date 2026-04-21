@@ -2,6 +2,8 @@
 
 #include "defines.h"
 
+#include <iosfwd>
+
 class Player
 {
 public:
@@ -20,6 +22,12 @@ public:
 	float LegsStartX() const { return m_x + 24; }
 	float LegsEndX()   const { return m_x + 64; }
 	float LegsY()      const { return m_y + 73; }
+
+	// Operatoriaus perkrovimas: leidzia daryti std::cout << player;
+	friend std::ostream& operator<<(std::ostream& os, const Player& p);
+
+	// Operatoriaus perkrovimas: palyginimas pagal y (aukscio) pozicija
+	bool operator<(const Player& other) const { return m_y < other.m_y; }
 
 private:
 	float m_x;

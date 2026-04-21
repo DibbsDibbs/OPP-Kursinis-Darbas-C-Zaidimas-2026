@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 #include <string>
 
 Game::Game()
@@ -154,6 +155,9 @@ void Game::update()
 
 	if (m_player.getY() > WINDOW_HEIGHT)
 	{
+		// Panaudojam perkrauta << operatoriu final log'inimui
+		std::cout << "Game Over. " << m_player
+			<< " Score: " << static_cast<int>(m_score) << std::endl;
 		m_state = GameState::GameOver;
 		return;
 	}

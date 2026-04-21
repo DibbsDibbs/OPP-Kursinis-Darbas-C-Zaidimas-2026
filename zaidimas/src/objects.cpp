@@ -1,6 +1,7 @@
 #include "objects.h"
 
 #include <cstdlib>
+#include <ostream>
 
 Plate::Plate()
 	: m_x(0.0f), m_y(0.0f)
@@ -54,4 +55,10 @@ void Player::move(float dx, float dy)
 {
 	m_x += dx;
 	m_y += dy;
+}
+
+std::ostream& operator<<(std::ostream& os, const Player& p)
+{
+	os << "Player{x=" << p.m_x << ", y=" << p.m_y << "}";
+	return os;
 }
